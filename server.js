@@ -41,28 +41,28 @@ app.get('/allmovies', async (req, res) => {
 
 // Example Route: Create a new movie
 app.post('/addmovie', async (req, res) => {
-    const { title, year, poster_url } = req.body;
+    const { movie_name, movie_pic } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
         await connection.execute(
-            'INSERT INTO movies (title, year, poster_url) VALUES (?, ?, ?)',
-            [title, year, poster_url]
+            'INSERT INTO movies (movie_name, movie_pic) VALUES (?, ?)',
+            [movie_name, movie_pic]
         );
-        res.status(201).json({ message: 'Movie ' +title+ ' added successfully' });
+        res.status(201).json({ message: 'Movie ' +movie_name+ ' added successfully' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error - could not add movie ' +title });
+        res.status(500).json({ message: 'Server error - could not add movie ' +movie_name });
     }
 });
 
 // Example Route: Update a movie
 app.put('/updatemovie', async (req, res) => {
-    const { id, title, year, poster_url } = req.body;
+    const { id, movie_name, movie_pic } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
         await connection.execute(
-            'UPDATE movies SET title = ?, year = ?, poster_url = ? WHERE id = ?',
-            [title, year, poster_url, id]
+            'UPDATE movies SET movie_name = ?, movie_pic = ? WHERE id = ?',
+            [movie_name, movie_pic, id]
         );
         res.status(200).json({ message: 'Movie id ' +id+ ' updated successfully' });
     } catch (err) {
